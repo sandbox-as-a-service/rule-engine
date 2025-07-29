@@ -40,7 +40,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
         .json({ error: "Invalid payload", details: err.issues });
     }
 
-    console.error("Risk rule error:", err);
+    console.error("Unexpected error:", err);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 }
