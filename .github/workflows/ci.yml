@@ -1,0 +1,41 @@
+name: CI
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+env:
+  NPM_TOKEN: ${{ secrets.ORG_PAT_READ_PACKAGES }}
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  install:
+    # Skip this entire job when Dependabot opens or updates the PR since it has no access to secrets.
+    if: ${{ github.actor != 'dependabot[bot]' }}
+
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
