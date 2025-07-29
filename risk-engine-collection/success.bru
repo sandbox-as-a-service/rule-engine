@@ -1,0 +1,22 @@
+meta {
+  name: success
+  type: http
+  seq: 1
+}
+
+post {
+  url: rule-engine-seven.vercel.app/api
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "credit_score": 580
+  }
+  
+}
