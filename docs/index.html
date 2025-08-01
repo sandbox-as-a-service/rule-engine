@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rule Engine - Rules Documentation</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f6f8fa;
+        color: #24292f;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 20px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .rule-card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid #0969da;
+      }
+
+      .rule-title {
+        font-size: 1.5em;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #0969da;
+      }
+
+      .rule-description {
+        margin-bottom: 15px;
+        color: #656d76;
+      }
+
+      .json-code {
+        background: #f6f8fa;
+        border: 1px solid #d0d7de;
+        border-radius: 6px;
+        padding: 16px;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+          monospace;
+        font-size: 14px;
+        overflow-x: auto;
+        white-space: pre;
+      }
+
+      .human-readable {
+        background: #dbeafe;
+        border: 1px solid #93c5fd;
+        border-radius: 6px;
+        padding: 16px;
+        margin-top: 10px;
+        font-style: italic;
+      }
+
+      .loading {
+        text-align: center;
+        color: #656d76;
+        font-style: italic;
+      }
+
+      .error {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #dc2626;
+        padding: 16px;
+        border-radius: 6px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>🔧 Rule Engine Documentation</h1>
+      <p>Interactive documentation for all rule configurations</p>
+    </div>
+
+    <div id="rules-container">
+      <div class="loading">Loading rules...</div>
+    </div>
+
+    <script>
+      // Function to humanize the JSONLogic rule
+      function humanizeRule(rule) {
+        if (!rule || typeof rule !== "object") return "Invalid rule format";
+
+        try {
+          if (rule.if) {
+            const condition = rule.if[0];
+            const trueResult = rule.if[1];
+            const falseResult = rule.if[2];
+
+            if (condition["<"]) {
+              const variable = condition["<"][0].var;
+              const value = condition["<"][1];
+              return `If ${variable} is less than ${value}, then return "${trueResult}", otherwise return "${falseResult}"`;
+            }
+
+            if (condition[">"]) {
+              const variable = condition[">"][0].var;
+              const value = condition[">"][1];
+              return `If ${variable} is greater than ${value}, then return "${trueResult}", otherwise return "${falseResult}"`;
+            }
+
+            if (condition["<="]) {
+              const variable = condition["<="][0].var;
+              const value = condition["<="][1];
+              return `If ${variable} is less than or equal to ${value}, then return "${trueResult}", otherwise return "${falseResult}"`;
+            }
+
+            if (condition[">="]) {
+              const variable = condition[">="][0].var;
+              const value = condition[">="][1];
+              return `If ${variable} is greater than or equal to ${value}, then return "${trueResult}", otherwise return "${falseResult}"`;
+            }
+
+            if (condition["=="]) {
+              const variable = condition["=="][0].var;
+              const value = condition["=="][1];
+              return `If ${variable} equals ${value}, then return "${trueResult}", otherwise return "${falseResult}"`;
+            }
+          }
+
+          return "Complex rule - see JSON for details";
+        } catch (e) {
+          return "Unable to parse rule logic";
+        }
+      }
+
+      // Function to load and display rules
+      async function loadRules() {
+        const container = document.getElementById("rules-container");
+
+        try {
+          // List of rule files to load
+          const ruleFiles = [
+            {
+              name: "risk-basic.json",
+              title: "Basic Risk Assessment",
+              description: "Simple credit score-based risk evaluation",
+            },
+          ];
+
+          container.innerHTML = "";
+
+          for (const ruleFile of ruleFiles) {
+            try {
+              const response = await fetch(`../rules/${ruleFile.name}`);
+              if (!response.ok)
+                throw new Error(`Failed to load ${ruleFile.name}`);
+
+              const ruleData = await response.json();
+
+              const ruleCard = document.createElement("div");
+              ruleCard.className = "rule-card";
+
+              ruleCard.innerHTML = `
+                            <div class="rule-title">${ruleFile.title}</div>
+                            <div class="rule-description">${
+                              ruleFile.description
+                            }</div>
+                            <div class="json-code">${JSON.stringify(
+                              ruleData,
+                              null,
+                              2
+                            )}</div>
+                            <div class="human-readable">
+                                <strong>In plain English:</strong><br>
+                                ${humanizeRule(ruleData)}
+                            </div>
+                        `;
+
+              container.appendChild(ruleCard);
+            } catch (error) {
+              const errorCard = document.createElement("div");
+              errorCard.className = "rule-card";
+              errorCard.innerHTML = `
+                            <div class="rule-title">${ruleFile.title}</div>
+                            <div class="error">Error loading rule: ${error.message}</div>
+                        `;
+              container.appendChild(errorCard);
+            }
+          }
+
+          if (container.children.length === 0) {
+            container.innerHTML = '<div class="loading">No rules found</div>';
+          }
+        } catch (error) {
+          container.innerHTML = `<div class="error">Failed to load rules: ${error.message}</div>`;
+        }
+      }
+
+      // Load rules when page loads
+      document.addEventListener("DOMContentLoaded", loadRules);
+    </script>
+  </body>
+</html>
