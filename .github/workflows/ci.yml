@@ -7,7 +7,7 @@ permissions:
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 env:
-  NPM_TOKEN: ${{ secrets.ORG_PAT_READ_PACKAGES }}
+  NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 on:
   push:
@@ -17,16 +17,11 @@ on:
 
 jobs:
   install:
-    # Skip this entire job when Dependabot opens or updates the PR since it has no access to secrets.
-    if: ${{ github.actor != 'dependabot[bot]' }}
-
     name: Install Dependencies
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
 
       - name: Enable Corepack
         run: corepack enable
