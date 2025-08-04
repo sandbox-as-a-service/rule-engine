@@ -10,7 +10,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "@vercel/node": "^5.3.8",
+    "@vercel/node": "^5.3.10",
     "json-logic-js": "^2.0.5",
     "zod": "^4.0.14"
   }
