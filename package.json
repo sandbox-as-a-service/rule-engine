@@ -6,7 +6,7 @@
     "@sandbox-as-a-service/types": "1.0.24",
     "@tsconfig/node22": "^22.0.2",
     "@types/json-logic-js": "^2.0.8",
-    "@types/node": "^24.1.0",
+    "@types/node": "^24.2.0",
     "typescript": "^5.9.2"
   },
   "dependencies": {
