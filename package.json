@@ -12,6 +12,6 @@
   "dependencies": {
     "@vercel/node": "^5.3.11",
     "json-logic-js": "^2.0.5",
-    "zod": "^4.0.14"
+    "zod": "^4.0.15"
   }
 }
