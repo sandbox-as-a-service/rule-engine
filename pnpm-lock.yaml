@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@vercel/node':
-        specifier: ^5.3.12
-        version: 5.3.12
+        specifier: ^5.3.13
+        version: 5.3.13
       json-logic-js:
         specifier: ^2.0.5
         version: 2.0.5
@@ -159,8 +159,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  '@vercel/node@5.3.12':
-    resolution: {integrity: sha512-IcnV+IMeccnnm6YhbMvorYlUz853EI443Ynof1NoN7YsiAcpaqTDsTyxDi064wc9BYBusGvqaPSVurOlcXehZg==}
+  '@vercel/node@5.3.13':
+    resolution: {integrity: sha512-SPz/Om2ohJsEX1I9AqYXd0BkmhKU70Jo7d6togRczyiUax1LSYMHsPs9rlzcxfwm4vLalL+Bx+D8KSfCjNaq5w==}
 
   '@vercel/static-config@3.1.1':
     resolution: {integrity: sha512-IRtKnm9N1Uqd2ayIbLPjRtdwcl1GTWvqF1PuEVNm9O43kmoI+m9VpGlW8oga+5LQq1LmJ2Y67zHr7NbjrH1rrw==}
@@ -194,8 +194,8 @@ packages:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
     engines: {node: '>=8'}
 
-  ansi-regex@6.1.0:
-    resolution: {integrity: sha512-7HSX4QQb4CspciLpVFwyRe79O3xsIZDDLER21kERQ71oaPodF8jL725AgJMFAYbooIqolJoRLuM81SpeUkpkvA==}
+  ansi-regex@6.2.0:
+    resolution: {integrity: sha512-TKY5pyBkHyADOPYlRT9Lx6F544mPl0vS5Ew7BJ45hA08Q+t3GjbueLliBWN3sMICk6+y7HdyxSzC4bWS8baBdg==}
     engines: {node: '>=12'}
 
   ansi-styles@4.3.0:
@@ -884,7 +884,7 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vercel/node@5.3.12':
+  '@vercel/node@5.3.13':
     dependencies:
       '@edge-runtime/node-utils': 2.3.0
       '@edge-runtime/primitives': 4.1.0
@@ -943,7 +943,7 @@ snapshots:
 
   ansi-regex@5.0.1: {}
 
-  ansi-regex@6.1.0: {}
+  ansi-regex@6.2.0: {}
 
   ansi-styles@4.3.0:
     dependencies:
@@ -1307,7 +1307,7 @@ snapshots:
 
   strip-ansi@7.1.0:
     dependencies:
-      ansi-regex: 6.1.0
+      ansi-regex: 6.2.0
 
   tar@7.4.3:
     dependencies:
